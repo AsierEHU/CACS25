@@ -14,13 +14,13 @@ import org.sonar.plugins.java.api.tree.Tree.Kind;
 import java.util.List;
  
 @Rule(
-  key = "CWE-311",
-  name = "Missing Encryption of Sensitive Data",
+  key = "CWE-434",
+  name = "Unrestricted Upload of File with Dangerous Types",
   description = "",
   priority = Priority.MAJOR,
   tags = {"sans-top25-risky"})
 
-public class CWE311 extends IssuableSubscriptionVisitor {
+public class CWE434 extends IssuableSubscriptionVisitor {
 	 
 	  @Override
 	  public List<Kind> nodesToVisit() {
