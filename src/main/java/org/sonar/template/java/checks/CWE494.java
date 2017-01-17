@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 import org.sonar.check.Priority;
 import org.sonar.check.Rule;
 import org.sonar.plugins.java.api.IssuableSubscriptionVisitor;
+import org.sonar.plugins.java.api.tree.MemberSelectExpressionTree;
 import org.sonar.plugins.java.api.tree.MethodInvocationTree;
 import org.sonar.plugins.java.api.tree.Tree;
 import org.sonar.plugins.java.api.tree.Tree.Kind;
@@ -28,8 +29,14 @@ public class CWE494 extends IssuableSubscriptionVisitor {
   @Override
   public void visitNode(Tree tree) {
 	  MethodInvocationTree lt = (MethodInvocationTree) tree;
-	  if(lt.symbol().name().equals("update")){
-		  reportIssue(lt, "Never do that!");
+	  if(lt.methodSelect().is(Kind.MEMBER_SELECT)){
+		  MemberSelectExpressionTree ms = (MemberSelectExpressionTree) lt.methodSelect();
+		  //falta comprovar que la clase del metodo update sea MessageDigest
+		  if(ms.identifier().name().equals("update")){
+			  if(lt.arguments().get(0).toString().equals("pass")){
+				  reportIssue(lt, "You need to add salt");
+			  }
+		  }
 	  }
 
   }
