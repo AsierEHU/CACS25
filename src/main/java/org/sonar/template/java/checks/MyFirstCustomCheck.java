@@ -20,7 +20,7 @@ import java.util.List;
   priority = Priority.CRITICAL,
   tags = {"bug"})
 
-public class MyFirstCustomCheckLO extends IssuableSubscriptionVisitor {
+public class MyFirstCustomCheck extends IssuableSubscriptionVisitor {
  
   @Override
   public List<Kind> nodesToVisit() {
