@@ -31,10 +31,11 @@ public class CWE494 extends IssuableSubscriptionVisitor {
 	  MethodInvocationTree lt = (MethodInvocationTree) tree;
 	  if(lt.methodSelect().is(Kind.MEMBER_SELECT)){
 		  MemberSelectExpressionTree ms = (MemberSelectExpressionTree) lt.methodSelect();
-		  //falta comprovar que la clase del metodo update sea MessageDigest
-		  if(ms.identifier().name().equals("update")){
-			  if(lt.arguments().get(0).toString().equals("pass")){
-				  reportIssue(lt, "You need to add salt");
+		  if(ms.firstToken().text().equals("encer")){
+			  if(ms.identifier().name().equals("update")){
+				  if(!lt.arguments().get(0).kind().toString().equals("PLUS")){
+					  reportIssue(lt, "You need to add salt");
+				  }
 			  }
 		  }
 	  }
