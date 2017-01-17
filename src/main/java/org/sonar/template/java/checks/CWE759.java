@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableList;
 import org.sonar.check.Priority;
 import org.sonar.check.Rule;
 import org.sonar.plugins.java.api.IssuableSubscriptionVisitor;
-import org.sonar.plugins.java.api.tree.ClassTree;
 import org.sonar.plugins.java.api.tree.MemberSelectExpressionTree;
 import org.sonar.plugins.java.api.tree.MethodInvocationTree;
 import org.sonar.plugins.java.api.tree.Tree;
@@ -15,14 +14,14 @@ import org.sonar.plugins.java.api.tree.VariableTree;
 import java.util.ArrayList;
 import java.util.List;
 
-@Rule(key = "CWE-494", name = "Download of Code Without Integrity Check", description = "", priority = Priority.MAJOR, tags = {
+@Rule(key = "CWE-759", name = "Use of a One-Way Hash without a Salt", description = "", priority = Priority.MAJOR, tags = {
 		"sans-top25-risky" })
 
-public class CWE494 extends IssuableSubscriptionVisitor {
+public class CWE759 extends IssuableSubscriptionVisitor {
 
 	private ArrayList<String> MessageDigestVariables;
 
-	public CWE494() {
+	public CWE759() {
 		MessageDigestVariables = new ArrayList<>();
 	}
 
@@ -45,7 +44,7 @@ public class CWE494 extends IssuableSubscriptionVisitor {
 				if (MessageDigestVariables.contains(ms.firstToken().text())) {
 					if (ms.identifier().name().equals("update")) {
 						if (!mit.arguments().get(0).kind().toString().equals("PLUS")) {
-							reportIssue(mit, "You need to add salt");
+							reportIssue(tree, "You need to add salt");
 						}
 					}
 				}
